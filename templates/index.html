@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Calculadora Nutricional</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🍽️ Calculadora Nutricional</h1>
+    <p class="descripcion">Calcula calorías y macronutrientes personalizados.</p>
+
+    <div class="layout">
+
+        <!-- FORM -->
+        <form method="POST" class="card form">
+
+            <div class="field">
+                <label>Sexo</label>
+                <select name="sexo">
+                    <option value="hombre" {% if form.sexo == "hombre" %}selected{% endif %}>Hombre</option>
+                    <option value="mujer" {% if form.sexo == "mujer" %}selected{% endif %}>Mujer</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Edad</label>
+                <input type="number" name="edad" value="{{ form.edad }}">
+            </div>
+
+            <div class="field">
+                <label>Peso (kg)</label>
+                <input type="number" step="0.1" name="peso" value="{{ form.peso }}">
+            </div>
+
+            <div class="field">
+                <label>Altura (cm)</label>
+                <input type="number" step="0.1" name="altura" value="{{ form.altura }}">
+            </div>
+
+            <div class="field">
+                <label>Actividad</label>
+                <select name="actividad">
+                    <option value="1.2">Sedentario</option>
+                    <option value="1.375">Ligero</option>
+                    <option value="1.55">Moderado</option>
+                    <option value="1.725">Alto</option>
+                    <option value="1.9">Muy alto</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Objetivo</label>
+                <select name="objetivo">
+                    <option value="mantener">Mantener</option>
+                    <option value="perder_lento">Perder lento</option>
+                    <option value="perder_rapido">Perder rápido</option>
+                    <option value="ganar_limpio">Ganar músculo</option>
+                    <option value="ganar_agresivo">Ganar rápido</option>
+                </select>
+            </div>
+
+            <button type="submit">Calcular</button>
+
+        </form>
+
+        <!-- RESULT -->
+        <div class="card resultado">
+
+            {% if resultado %}
+
+            <h2>📊 Resultado diario</h2>
+
+            <div class="mini">🔥 {{ resultado.calorias }} kcal</div>
+            <div class="mini">⚡ BMR: {{ resultado.bmr }}</div>
+            <div class="mini">🎯 {{ resultado.objetivo }}</div>
+            <div class="mini">🍗 Proteína: {{ resultado.proteina }} g</div>
+            <div class="mini">🥑 Grasas: {{ resultado.grasas }} g</div>
+            <div class="mini">🍞 Carbos: {{ resultado.carbohidratos }} g</div>
+
+            {% else %}
+
+            <h2>📊 Resultado diario</h2>
+            <p>Introduce tus datos para ver el resultado</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
